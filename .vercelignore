@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+env/
+venv/
+ENV/
+.env
+
+# Development
+.git
+.gitignore
+.idea/
+.vscode/
+*.swp
+*.swo
+*.log
+.DS_Store
+
+# Project specific
+tests/
+docs/
+*.md
+LICENSE
+README*
+CHANGELOG*
+*.pyc
+__pycache__
+.pytest_cache
+.coverage
+htmlcov/
+.tox/
+.nox/
+instance/
+.webassets-cache
+
+# Node
+node_modules/
+
+# Testing
+test/
+testing/
+
+# Documentation
+*.so 

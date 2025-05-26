@@ -1,0 +1,26 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "resource_scraper/api.py",
+            "use": "@vercel/python",
+            "config": {
+                "maxLambdaSize": "15mb",
+                "runtime": "python3.9"
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/(.*)",
+            "dest": "resource_scraper/api.py"
+        },
+        {
+            "src": "/health",
+            "dest": "resource_scraper/api.py"
+        }
+    ],
+    "env": {
+        "APP_MODULE": "resource_scraper.api:app"
+    }
+} 

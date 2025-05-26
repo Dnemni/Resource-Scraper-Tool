@@ -138,9 +138,9 @@ async def main():
                 
                 # Display detailed information for top resources
                 console.print("\n[bold yellow]📚 Detailed Information for Top Resources:[/bold yellow]\n")
-                for i, resource in enumerate(resources[:3], 1):
+                for i, resource in enumerate(resources[:5], 1):
                     console.print(create_resource_panel(resource, i))
-                    if i < 3:
+                    if i < 5:
                         console.print()  # Add spacing between panels
                 
                 # Add helpful tip

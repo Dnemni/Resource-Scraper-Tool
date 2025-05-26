@@ -97,7 +97,7 @@ class ResourceScraper:
                 title=title,
                 url=url,
                 description=description,
-                resource_type=resource_type,
+                resource_type=resource_type.value,
                 source="web_search",
                 credibility_score=credibility_score,
                 relevance_score=relevance_score

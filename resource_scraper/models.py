@@ -13,16 +13,13 @@ class Resource(BaseModel):
     title: str
     url: str
     description: str
-    resource_type: ResourceType
-    source: str
+    resource_type: str
     credibility_score: float
     relevance_score: float
-    votes: int = 0
     
 class SearchRequest(BaseModel):
     topic: str
     resource_types: Optional[List[ResourceType]] = None
     
 class SearchResponse(BaseModel):
-    resources: List[Resource]
-    total_results: int 
+    resources: List[Resource] 

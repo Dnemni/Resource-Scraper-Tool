@@ -1,10 +1,6 @@
-python-dotenv==1.0.0
-requests==2.31.0
-beautifulsoup4==4.12.2
-fastapi==0.109.0
-uvicorn==0.27.0
-pydantic>=2.6.1
-python-multipart==0.0.6
-httpx>=0.28.1
-google-genai==1.16.1
-crewai-tools==0.0.6 
+fastapi==0.95.0
+uvicorn==0.20.0
+pydantic==1.10.7
+httpx==0.23.3
+python-dotenv==0.21.1
+beautifulsoup4==4.11.2 
