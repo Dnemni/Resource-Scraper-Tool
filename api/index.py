@@ -29,7 +29,7 @@ app.add_middleware(
 # Initialize scraper
 scraper = ResourceScraper()
 
-@app.post("/api/search", response_model=SearchResponse)
+@app.post("/search", response_model=SearchResponse)
 async def search_resources(request: SearchRequest) -> SearchResponse:
     """
     Search for educational resources based on topic and resource types.
@@ -47,7 +47,7 @@ async def search_resources(request: SearchRequest) -> SearchResponse:
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/api/resource-types")
+@app.get("/resource-types")
 async def get_resource_types() -> Dict[str, List[Dict[str, str]]]:
     """
     Get available resource types.
@@ -59,7 +59,7 @@ async def get_resource_types() -> Dict[str, List[Dict[str, str]]]:
         ]
     }
 
-@app.get("/health")
+@app.get("/")
 async def health_check() -> Dict[str, str]:
     """
     Check API health.
