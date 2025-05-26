@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Optional
 from enum import Enum
 
@@ -16,9 +16,9 @@ class Resource(BaseModel):
     resource_type: str = Field(description="Type of the resource")
     credibility_score: float = Field(description="Credibility score of the resource", ge=0.0, le=1.0)
     relevance_score: float = Field(description="Relevance score of the resource", ge=0.0, le=1.0)
-    
-    model_config = {
-        "json_schema_extra": {
+
+    model_config = ConfigDict(
+        json_schema_extra={
             "examples": [
                 {
                     "title": "Python Tutorial",
@@ -30,14 +30,16 @@ class Resource(BaseModel):
                 }
             ]
         }
-    }
-    
+    )
+
 class SearchRequest(BaseModel):
     topic: str = Field(description="Topic to search for")
-    resource_types: Optional[List[ResourceType]] = Field(default=None, description="List of resource types to filter by")
-    
-    model_config = {
-        "json_schema_extra": {
+    resource_types: Optional[List[ResourceType]] = Field(
+        default=None, description="List of resource types to filter by"
+    )
+
+    model_config = ConfigDict(
+        json_schema_extra={
             "examples": [
                 {
                     "topic": "Python programming",
@@ -45,13 +47,13 @@ class SearchRequest(BaseModel):
                 }
             ]
         }
-    }
-    
+    )
+
 class SearchResponse(BaseModel):
     resources: List[Resource] = Field(description="List of found resources")
-    
-    model_config = {
-        "json_schema_extra": {
+
+    model_config = ConfigDict(
+        json_schema_extra={
             "examples": [
                 {
                     "resources": [
@@ -67,4 +69,4 @@ class SearchResponse(BaseModel):
                 }
             ]
         }
-    } 
+    )
