@@ -1,15 +1,10 @@
 {
     "version": 2,
-    "builds": [
-        {
-            "src": "resource_scraper/api.py",
-            "use": "@vercel/python",
-            "config": {
-                "maxLambdaSize": "15mb",
-                "runtime": "python3.11"
-            }
+    "functions": {
+        "resource_scraper/api.py": {
+            "runtime": "python3.10"
         }
-    ],
+    },
     "routes": [
         {
             "src": "/api/(.*)",

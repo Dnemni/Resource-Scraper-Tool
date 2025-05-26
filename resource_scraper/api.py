@@ -1,3 +1,8 @@
+import pydantic
+import fastapi
+print("Running with Pydantic", pydantic.__version__)
+print("Running with FastAPI", fastapi.__version__)
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from .models import SearchRequest, SearchResponse, ResourceType
