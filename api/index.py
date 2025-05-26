@@ -14,16 +14,18 @@ from typing import List, Dict
 app = FastAPI(
     title="Resource Scraper API",
     description="API for finding educational resources",
-    version="1.0.0"
+    version="1.0.0",
+    root_path="/api"
 )
 
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=False,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"]
 )
 
 # Initialize scraper
@@ -67,4 +69,4 @@ async def health_check() -> Dict[str, str]:
     return {"status": "healthy"}
 
 # Create handler for Vercel
-handler = Mangum(app) 
+handler = Mangum(app, lifespan="off") 
