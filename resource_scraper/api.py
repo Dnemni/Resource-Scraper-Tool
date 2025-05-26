@@ -1,10 +1,15 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from .models import SearchRequest, SearchResponse
+from .models import SearchRequest, SearchResponse, ResourceType
 from .scraper import ResourceScraper
 import os
+from typing import List, Dict
 
-app = FastAPI()
+app = FastAPI(
+    title="Resource Scraper API",
+    description="API for finding educational resources",
+    version="1.0.0"
+)
 
 # Add CORS middleware
 app.add_middleware(
@@ -18,8 +23,11 @@ app.add_middleware(
 # Initialize scraper
 scraper = ResourceScraper()
 
-@app.post("/api/search")
-async def search_resources(request: SearchRequest):
+@app.post("/api/search", response_model=SearchResponse)
+async def search_resources(request: SearchRequest) -> SearchResponse:
+    """
+    Search for educational resources based on topic and resource types.
+    """
     try:
         if not os.getenv("SERPER_API_KEY"):
             raise HTTPException(status_code=500, detail="API key not configured")
@@ -27,17 +35,27 @@ async def search_resources(request: SearchRequest):
         resources = await scraper.search_resources(request.topic)
         
         if request.resource_types:
-            resources = [r for r in resources if r.resource_type in request.resource_types]
+            resources = [r for r in resources if ResourceType(r.resource_type) in request.resource_types]
             
-        return {"resources": resources[:5]}
+        return SearchResponse(resources=resources[:5])
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/resource-types")
-async def get_resource_types():
-    from .models import ResourceType
-    return {"resource_types": [{"value": t.value, "label": t.value.title()} for t in ResourceType]}
+async def get_resource_types() -> Dict[str, List[Dict[str, str]]]:
+    """
+    Get available resource types.
+    """
+    return {
+        "resource_types": [
+            {"value": t.value, "label": t.value.title()} 
+            for t in ResourceType
+        ]
+    }
 
 @app.get("/health")
-async def health_check():
+async def health_check() -> Dict[str, str]:
+    """
+    Check API health.
+    """
     return {"status": "healthy"} 

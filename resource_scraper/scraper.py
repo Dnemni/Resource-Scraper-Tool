@@ -81,7 +81,7 @@ class ResourceScraper:
         
         # Process organic search results
         for result in results.get("organic", []):
-            url = result.get("link")
+            url = result.get("link", "")
             title = result.get("title", "")
             description = result.get("snippet", "")
             
@@ -93,16 +93,20 @@ class ResourceScraper:
                                 if word in title.lower() or word in description.lower()) / len(topic.split())
             relevance_score = min(1.0, relevance_score)
             
-            resource = Resource(
-                title=title,
-                url=url,
-                description=description,
-                resource_type=resource_type.value,
-                source="web_search",
-                credibility_score=credibility_score,
-                relevance_score=relevance_score
-            )
-            resources.append(resource)
+            # Create resource with validated fields
+            try:
+                resource = Resource(
+                    title=title,
+                    url=url,
+                    description=description,
+                    resource_type=resource_type.value,
+                    credibility_score=credibility_score,
+                    relevance_score=relevance_score
+                )
+                resources.append(resource)
+            except Exception as e:
+                print(f"Error creating resource: {e}")
+                continue
         
         # Sort resources by combined score
         resources.sort(key=lambda x: (x.credibility_score + x.relevance_score) / 2, reverse=True)
