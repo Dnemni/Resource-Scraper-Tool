@@ -1,12 +1,12 @@
-import pydantic
 import fastapi
-print("Running with Pydantic", pydantic.__version__)
-print("Running with FastAPI", fastapi.__version__)
+import pydantic
+print("FastAPI version:", fastapi.__version__)
+print("Pydantic version:", pydantic.__version__)
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from .models import SearchRequest, SearchResponse, ResourceType
-from .scraper import ResourceScraper
+from resource_scraper.models import SearchRequest, SearchResponse, ResourceType
+from resource_scraper.scraper import ResourceScraper
 import os
 from typing import List, Dict
 
@@ -20,7 +20,7 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=False,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -58,7 +58,7 @@ async def get_resource_types() -> Dict[str, List[Dict[str, str]]]:
         ]
     }
 
-@app.get("/health")
+@app.get("/api")
 async def health_check() -> Dict[str, str]:
     """
     Check API health.
