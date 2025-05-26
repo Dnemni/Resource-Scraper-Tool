@@ -11,12 +11,7 @@ from resource_scraper.scraper import ResourceScraper
 import os
 from typing import List, Dict
 
-app = FastAPI(
-    title="Resource Scraper API",
-    description="API for finding educational resources",
-    version="1.0.0",
-    root_path="/api"
-)
+app = FastAPI()
 
 # Add CORS middleware
 app.add_middleware(
@@ -25,13 +20,12 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["*"]
 )
 
 # Initialize scraper
 scraper = ResourceScraper()
 
-@app.post("/search", response_model=SearchResponse)
+@app.post("/api/search", response_model=SearchResponse)
 async def search_resources(request: SearchRequest) -> SearchResponse:
     """
     Search for educational resources based on topic and resource types.
@@ -49,7 +43,7 @@ async def search_resources(request: SearchRequest) -> SearchResponse:
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/resource-types")
+@app.get("/api/resource-types")
 async def get_resource_types() -> Dict[str, List[Dict[str, str]]]:
     """
     Get available resource types.
@@ -61,7 +55,7 @@ async def get_resource_types() -> Dict[str, List[Dict[str, str]]]:
         ]
     }
 
-@app.get("/")
+@app.get("/api")
 async def health_check() -> Dict[str, str]:
     """
     Check API health.
@@ -69,4 +63,4 @@ async def health_check() -> Dict[str, str]:
     return {"status": "healthy"}
 
 # Create handler for Vercel
-handler = Mangum(app, lifespan="off") 
+handler = Mangum(app) 
