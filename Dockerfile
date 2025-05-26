@@ -2,18 +2,15 @@ FROM python:3.10-slim
 
 WORKDIR /app
 
-# System dependencies
-RUN apt-get update && apt-get install -y build-essential curl
+# Install system deps
+RUN apt-get update && apt-get install -y curl gcc
 
-# Copy and install requirements
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy project
+# Copy all project files
 COPY . .
 
-# Set environment variables
-ENV PORT=3000
-
-# Start FastAPI using Uvicorn
-CMD ["uvicorn", "resource_scraper.api:app", "--host", "0.0.0.0", "--port", "3000"] 
+# Run FastAPI with Uvicorn
+CMD ["uvicorn", "resource_scraper.api:app", "--host", "0.0.0.0", "--port", "8080"] 
