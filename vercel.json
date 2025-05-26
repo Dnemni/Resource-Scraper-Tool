@@ -1,33 +1,13 @@
 {
     "version": 2,
-    "functions": {
-        "resource_scraper/api.py": {
-            "runtime": "python3.10"
-        }
-    },
     "routes": [
         {
             "src": "/api/(.*)",
-            "dest": "resource_scraper/api.py",
-            "methods": ["GET", "POST", "OPTIONS"],
             "headers": {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
                 "Access-Control-Allow-Headers": "Content-Type"
             }
-        },
-        {
-            "src": "/health",
-            "dest": "resource_scraper/api.py",
-            "methods": ["GET", "OPTIONS"],
-            "headers": {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "GET, OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type"
-            }
         }
-    ],
-    "env": {
-        "APP_MODULE": "resource_scraper.api:app"
-    }
+    ]
 } 
